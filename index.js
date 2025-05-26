@@ -1,3 +1,3 @@
-"use strict";
-const greeting = "Hello world!";
-document.body.innerHTML = `<h1>${greeting}</h1>`;
+import { RenderLoop } from "./RenderLoop.js";
+// Starts the render loop in async //
+RenderLoop().catch(console.error);
