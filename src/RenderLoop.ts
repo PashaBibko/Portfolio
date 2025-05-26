@@ -9,7 +9,7 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
     const colorLocation = gl.getUniformLocation(program, "u_color");
 
     // Defines the vertex locations //
-    const half = 0.003;
+    const half = 0.002;
     const corners =
     [
         position.x + 0   , position.y - half,

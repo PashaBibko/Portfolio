@@ -8,9 +8,64 @@
     </head>
 
     <body>
+        <!-- Front Section -->
         <canvas id="FrontCanvas"></canvas>
 
-        <h1 id="MainTitle">Hello there</h1>
+        <div style="display: flex;">
+            <!-- Left projects section (Low-Level projects) -->
+            <div id="LhsSection">
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/LX-Logo.jpg" alt="" style="height: 200px; width: 200px;">
+                        <span>
+                            <h3> Project: LX </h3>
+                            <p>
+                                Description
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/MinOS.webp" alt="" style="height: 200px; width: 200px;">
+                        <span>
+                            <h3> Project: MinOS </h3>
+                            <p>
+                                Description
+                            </p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right projects section (Game development projects) -->
+            <div id="RhsSection">
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/PenguinChase.jpg" alt="" style="height: 200px; width: 200px; border-color: whitesmoke; border-radius: 5px; border-width: 5px; border-style: solid;">
+                        <span>
+                            <h3> Project: Penguin Chase </h3>
+                            <p>
+                                Description
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/TheMobiusLine.png" alt="" style="height: 200px; width: 200px; border-color: whitesmoke; border-radius: 5; border-width: 5px; border-style: solid;">
+                        <span>
+                            <h3> Project: The Mobius Line </h3>
+                            <p>
+                                Description
+                            </p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Runs the scripts -->
         <script src="./index.js" type="module"></script>
