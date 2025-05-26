@@ -8,9 +8,130 @@
     </head>
 
     <body>
+        <!-- Front Section -->
         <canvas id="FrontCanvas"></canvas>
 
-        <h1 id="MainTitle">Hello there</h1>
+        <div style="display: flex;">
+            <!-- Left projects section (Low-Level projects) -->
+            <div id="LhsSection">
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/LX-Logo.jpg" alt="" style="height: 200px; width: 200px;">
+                        <span>
+                            <h2> Project: LX </h2>
+                            <p>
+                                LX is my custom language built on top of the LLVM toolchain.
+                                It is written in a combination of C++ and C#.
+                                Currently the language only supports basic functions and integer variable manipulation.
+                            </p>
+                            <p>
+                                My end goal for the project is to be able to bootstrap the compiler
+                                - in other words write the compiler almost completly in LX.
+                                This project allows me to explore compiler design, language syntax design,
+                                code generation with LLVM Intermediate representation and cross-language interoperability.
+                            </p>
+                            <p>
+                                Future goals for the project are to support more variable types (such as float or char),
+                                control flow structures, memory management and user-defined types.
+                                Some of the other features I would like to implement are a standard library,
+                                Visual Studio extension and a cutom linker written in Rust.
+                            </p>
+                            <p>
+                                The source code for the compiler can be found
+                                <a href="https://github.com/PashaBibko/LX" target="_blank" style="color: whitesmoke;">here</a>.
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/MinOS.webp" alt="" style="height: 200px; width: 200px;">
+                        <span>
+                            <h2> Project: MinOS </h2>
+                            <p>
+                                MinOS is my custom operating system written in ASM using the Fat12 file system.
+                                Currnetly it only supports printing strings to the console and reading data from the hard drive.
+                            </p>
+                            <p>
+                                My end goal for the project is to be able to support C++11
+                                allowing me to compile some apps on the operation system.
+                                This project allows me to explore computer architecthure, low level programming skills,
+                                memory management and kernel level development.
+                            </p>
+                            <p>
+                                <b>NOTE:</b> this code is only designed to work on Linux (Debian).
+                                <br>
+                                The source code for the compiler can be found
+                                <a href="https://github.com/PashaBibko/MinOS" target="_blank" style="color: whitesmoke;">here</a>.
+                            </p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right projects section (Game development projects) -->
+            <div id="RhsSection">
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/PenguinChase.jpg" alt="" style="height: 200px; width: 200px; border-color: whitesmoke; border-radius: 5px; border-width: 5px; border-style: solid;">
+                        <span>
+                            <h2> Project: Penguin Chase </h2>
+                            <p>
+                                'Penguin Chase' is a game about chasing other penguins down a hill
+                                and to get to the end before them without crashing into any
+                                obstacles along the way.
+                            </p>
+                            <p>
+                                This project was developed with Unity and I was able to further
+                                some of my skills within it such as procedual generation and custom
+                                pathfinding. As it was developed in a group it improved my
+                                skills within working in a team.
+                            </p>
+                            <p>
+                                It was made by me and a group of 3 others
+                                who worked on the art assets and managing the development for a
+                                competion in my collage. In the competion it won both 'Player choice'
+                                and 'Industry choice'.
+                            </p>
+                            <p>
+                                This project is not open source but it is playable
+                                <a href="https://penguinastarion.itch.io/penguin-chase" target="_blank" style="color: whitesmoke;">here</a>.
+                                It is also part of a demo disk on steam available
+                                <span style="text-decoration: underline;">here [currently unreleased]</span>.
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ProjectDisplay">
+                    <div class="ProjectDisplayInner">
+                        <img src="images/TheMobiusLine.png" alt="" style="height: 200px; width: 200px; border-color: whitesmoke; border-radius: 5; border-width: 5px; border-style: solid;">
+                        <span>
+                            <h2> Project: The Mobius Line </h2>
+                            <p>
+                                'The Mobius Line' is a short game about travelling from
+                                one platform to the other as fast as you can. The game is 
+                                built around non-Euclidean concepts which means the normal
+                                rules of geometery do not apply. This was my Final Major Project
+                                of the first year of Level-3 Game Development.
+                            </p>
+                            <p>
+                                As this project uses non-Euclidean mechanics it required me to
+                                learn certain skills such as custom render pipelines and custom
+                                physics to propely simulate the mechanics.
+                            </p>
+                            <p>
+                                This project can be played
+                                <a href="https://pashabibko.itch.io/the-mobius-line" target="_blank" style="color: whitesmoke;">here</a>
+                                and the source code can be found
+                                <a href="https://github.com/PashaBibko/The-Mobius-Line" target="_blank" style="color: whitesmoke;">here</a>.
+                            </p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Runs the scripts -->
         <script src="./index.js" type="module"></script>

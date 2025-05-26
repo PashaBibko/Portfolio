@@ -5,9 +5,79 @@
     height: 100vh;
 }
 
+#LhsSection
+{
+    background-image: url('images/chip.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    width: 50vw;
+}
+
+#RhsSection
+{
+    background-image: url('images/drg.webp');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    width: 50vw;
+}
+
+.ProjectDisplay
+{
+    max-width: 40vw;
+
+    padding-bottom: 15px;
+    padding-top: 15px;
+
+    padding-right: 5vw;
+    padding-left: 5vw;
+}
+
+.ProjectDisplayInner
+{
+    background-color: black;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 5px;
+    border-width: 5px;
+
+    border-color: whitesmoke;
+    border-style: solid;
+
+    padding: 15px;
+    gap: 15px;
+
+    color: whitesmoke;
+}
+
+div
+{
+    padding: 0;
+    margin: 0;
+}
+
 body
 {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+}
+
+h2
+{
+    font-size: 60px;
+}
+
+p
+{
+    font-size: 32px;
 }

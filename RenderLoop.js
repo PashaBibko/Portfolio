@@ -15,7 +15,7 @@ function DrawCircle(gl, program, position) {
     const positionLocation = gl.getAttribLocation(program, "a_position");
     const colorLocation = gl.getUniformLocation(program, "u_color");
     // Defines the vertex locations //
-    const half = 0.003;
+    const half = 0.002;
     const corners = [
         position.x + 0, position.y - half,
         position.x + half, position.y + 0,
