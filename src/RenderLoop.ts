@@ -6,6 +6,7 @@ import { FrontCanvasRenderDot } from "./Dot.js";
 function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: Vec2)
 {
     const positionLocation = gl.getAttribLocation(program, "a_position");
+    const colorLocation = gl.getUniformLocation(program, "u_color");
 
     // Defines the vertex locations //
     const half = 0.003;
@@ -27,13 +28,16 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
+    gl.uniform4f(colorLocation, 1.0, 1.0, 1.0, 1.0);
+
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 5);
 }
 
 // Helper function to draw a line between two points //
-function DrawLine(gl: WebGLRenderingContext, program: WebGLProgram, p1: Vec2, p2: Vec2)
+function DrawLine(gl: WebGLRenderingContext, program: WebGLProgram, p1: Vec2, p2: Vec2, grayscale: number)
 {
     const positionLocation = gl.getAttribLocation(program, "a_position");
+    const colorLocation = gl.getUniformLocation(program, "u_color");
 
     // Defines the points of the line //
     const vertecies =
@@ -50,6 +54,8 @@ function DrawLine(gl: WebGLRenderingContext, program: WebGLProgram, p1: Vec2, p2
     gl.useProgram(program);
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    gl.uniform4f(colorLocation, grayscale, grayscale, grayscale, 1.0);
 
     gl.drawArrays(gl.LINES, 0, 2);
 }
@@ -119,20 +125,22 @@ export async function RenderLoop()
         // Renders each of the dots //
         for (let i = 0; i < dots.length; i++)
         {
-            DrawCircle(gl!, program, dots[i].location);
-
             // Calculates which other dots it should draw a line too //
             for (let j = i; j < dots.length; j++)
             {
                 const distSqr = CalculateSqrDist(dots[i].location, dots[j].location);
                 if (distSqr < 0.01)
                 {
-                    DrawLine(gl!, program, dots[i].location, dots[j].location);
+                    const dist = Math.sqrt(distSqr) * 10;
+                    DrawLine(gl!, program, dots[i].location, dots[j].location, 1.0 - dist);
                 }
             }
+
+            // Draws the circle on top //
+            DrawCircle(gl!, program, dots[i].location);
         }
     }
 
     // Any faster causes the browser to lag //
-    setInterval(() => { RenderFrame(); }, 75);
+    setInterval(() => { RenderFrame(); }, 50);
 }
