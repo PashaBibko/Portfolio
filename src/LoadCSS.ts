@@ -17,7 +17,7 @@ function LoadCSS(url: string): void
 }
 
 // Loads the correct CSS depending on the user's device //
-if (IsUserOnMobile())
+if (IsUserOnMobile() === false)
 {
     LoadCSS("./Mobile.css")
 }
