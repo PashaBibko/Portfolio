@@ -1,0 +1,78 @@
+#FrontCanvas
+{
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Leave this undefined */
+/* #FirstProjectSection */
+
+#LhsSection
+{
+    background-image: url(images/chip.jpg);
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    width: 100vw;
+}
+
+#RhsSection
+{
+    background-image: url(images/drg.webp);
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    width: 100vw;
+}
+
+.ProjectDisplay
+{
+    max-width: 90vw;
+
+    padding-bottom: 15px;
+    padding-top: 15px;
+
+    padding-left: 5vw;
+    padding-right: 5vh;
+}
+
+.ProjectDisplayInner
+{
+    background-color: black;
+
+    border-radius: 5px;
+    border-width: 5px;
+
+    border-color: whitesmoke;
+    border-style: solid;
+
+    padding: 15px;
+    gap: 15px;
+
+    color: whitesmoke;
+}
+
+.Logo
+{
+    height: 200px;
+    width: 200px;
+}
+
+.BorderLogo
+{
+    height: 200px;
+    width: 200px;
+    
+    border-color: whitesmoke;
+    border-style: solid;
+
+    border-radius: 5px;
+    border-width: 5px;
+}
