@@ -1,9 +1,4 @@
-#FrontCanvas
-{
-    display: block;
-    width: 100vw;
-    height: 100vh;
-}
+@import url("Global.css");
 
 /* Leave this undefined */
 /* #FirstProjectSection */
@@ -57,22 +52,4 @@
     gap: 15px;
 
     color: whitesmoke;
-}
-
-.Logo
-{
-    height: 200px;
-    width: 200px;
-}
-
-.BorderLogo
-{
-    height: 200px;
-    width: 200px;
-    
-    border-color: whitesmoke;
-    border-style: solid;
-
-    border-radius: 5px;
-    border-width: 5px;
 }

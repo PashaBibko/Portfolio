@@ -52,6 +52,7 @@ function DrawLine(gl, program, p1, p2, grayscale) {
     gl.uniform4f(colorLocation, grayscale, grayscale, grayscale, 1.0);
     gl.drawArrays(gl.LINES, 0, 2);
 }
+//let canvas: HTMLCanvasElement | null = null;
 // The render loop of the program //
 export function RenderLoop() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -61,13 +62,18 @@ export function RenderLoop() {
         if (!gl) {
             throw new Error("WebGL not supported");
         }
-        // Makes the canvas highest possible resolution //
-        const css_width = canvas.clientWidth;
-        const css_height = canvas.clientHeight;
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = css_width * dpr;
-        canvas.height = css_height * dpr;
-        gl.viewport(0, 0, canvas.width, canvas.height);
+        // Creates a listener to modify canvas on window change //
+        function UpdateCanvas() {
+            // Makes the canvas highest possible resolution //
+            const css_width = canvas.clientWidth;
+            const css_height = canvas.clientHeight;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = css_width * dpr;
+            canvas.height = css_height * dpr;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener("resize", UpdateCanvas);
+        UpdateCanvas();
         // Loads the shaders into a program //
         const vertShader = yield CreateShader(gl, gl.VERTEX_SHADER, "shaders/vert.glsl");
         const fragShader = yield CreateShader(gl, gl.FRAGMENT_SHADER, "shaders/frag.glsl");
