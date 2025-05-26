@@ -1,6 +1,6 @@
 import { CreateShader, CreateProgram } from "./GL_Program.js";
+import { Vec2, CalculateSqrDist } from "./Vec2.js";
 import { FrontCanvasRenderDot } from "./Dot.js";
-import { Vec2 } from "./Vec2.js";
 
 // Helper function to draw a circle at a given position //
 function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: Vec2)
@@ -18,7 +18,7 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
         position.x + 0   , position.y - half
     ];
 
-    // Drwas the "Circle" //
+    // Draws the "Circle" //
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(corners), gl.STATIC_DRAW);
@@ -28,6 +28,30 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 5);
+}
+
+// Helper function to draw a line between two points //
+function DrawLine(gl: WebGLRenderingContext, program: WebGLProgram, p1: Vec2, p2: Vec2)
+{
+    const positionLocation = gl.getAttribLocation(program, "a_position");
+
+    // Defines the points of the line //
+    const vertecies =
+    [
+        p1.x, p1.y,
+        p2.x, p2.y
+    ];
+
+    // Draws the line //
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertecies), gl.STATIC_DRAW);
+
+    gl.useProgram(program);
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    gl.drawArrays(gl.LINES, 0, 2);
 }
 
 // The render loop of the program //
@@ -69,8 +93,10 @@ export async function RenderLoop()
     let last: number | null = null;
 
     // The actual render loop //
-    function loop(currentTime: number)
+    function RenderFrame()
     {
+        const currentTime = performance.now();
+
         // Calculates the delta time //
         if (last === null)
         {
@@ -87,32 +113,26 @@ export async function RenderLoop()
         // Updates each of the dots //
         for (const dot of dots)
         {
-            dot.location.x = dot.location.x + (dot.velocity.x / 10.0 * delta);
-            dot.location.y = dot.location.y + (dot.velocity.y / 10.0 * delta);
-
-            // Flips x-velocity if the x coord is outside [-1, 1] //
-            if (dot.location.x < -1 || 1 < dot.location.x)
-            {
-                dot.velocity.x = -dot.velocity.x;
-            }
-
-            // Flips y-velocity if the y coord is outside [-1, 1] //
-            if (dot.location.y < -1 || 1 < dot.location.y)
-            {
-                dot.velocity.y = -dot.velocity.y;
-            }
+            dot.Update(delta);
         }
         
         // Renders each of the dots //
-        for (const dot of dots)
+        for (let i = 0; i < dots.length; i++)
         {
-            DrawCircle(gl!, program, dot.location);
-        }
+            DrawCircle(gl!, program, dots[i].location);
 
-        // Requests the next frame //
-        requestAnimationFrame(loop);
+            // Calculates which other dots it should draw a line too //
+            for (let j = i; j < dots.length; j++)
+            {
+                const distSqr = CalculateSqrDist(dots[i].location, dots[j].location);
+                if (distSqr < 0.01)
+                {
+                    DrawLine(gl!, program, dots[i].location, dots[j].location);
+                }
+            }
+        }
     }
 
-    // Starts the loop //
-    requestAnimationFrame(loop); // The loop function requests a new annimation frame
+    // Any faster causes the browser to lag //
+    setInterval(() => { RenderFrame(); }, 75);
 }
