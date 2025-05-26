@@ -5,10 +5,13 @@
         <title>Pasha Bibko</title>
 
         <!-- Runs the script to load specific CSS depending on user device -->
-        <script defer src="./LoadCSS.js" type="module"></script>
+        <script src="./LoadCSS.js" type="module"></script>
     </head>
 
     <body>
+        <!-- Dynamicly changing stylesheet -->
+        <link rel="stylesheet" href="" id="CSS">
+
         <!-- Front Section -->
         <canvas id="FrontCanvas"></canvas>
 
@@ -133,6 +136,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- Runs the script to load specific CSS depending on user device -->
+        <script src="./LoadCSS.js" type="module"></script>
 
         <!-- Runs the script to manage the website -->
         <script src="./index.js" type="module"></script>
