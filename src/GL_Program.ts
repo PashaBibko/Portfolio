@@ -1,21 +1,22 @@
-async function LoadShaderSource(url: string): Promise<string>
+function LoadShaderSource(url: string): string
 {
-    // Loads the shader source into a string //
-    const response = await fetch(url);
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send();
 
-    // Checks there were no errors before returning //
-    if (!response.ok)
+    if (xhr.status !== 200)
     {
-        throw new Error(`Failed to load shader: ${url}`);
+        throw new Error(`Failed to load shader: ${url} (status: ${xhr.status})`);
     }
-    return await response.text();
+
+    return xhr.responseText;
 }
 
-export async function CreateShader(gl: WebGLRenderingContext, type: number, filename: string): Promise<WebGLShader>
+export function CreateShader(gl: WebGLRenderingContext, type: number, filename: string): WebGLShader
 {
     // Compiles the shader from source //
     const shader = gl.createShader(type)!;
-    gl.shaderSource(shader, await LoadShaderSource(filename));
+    gl.shaderSource(shader, LoadShaderSource(filename));
     gl.compileShader(shader);
 
     // Checks there were no errors before returning //
@@ -26,7 +27,7 @@ export async function CreateShader(gl: WebGLRenderingContext, type: number, file
     return shader;
 }
 
-export async function CreateProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader): Promise<WebGLProgram>
+export function CreateProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader): WebGLProgram
 {
     // Links the shaders to the program //
     const program = gl.createProgram()!;

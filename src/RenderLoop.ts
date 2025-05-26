@@ -11,18 +11,18 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
     const half = 0.003;
     const corners =
     [
-        position.x + 0   , position.y - half,
-        position.x + half, position.y +    0,
-        position.x + 0   , position.y + half,
-        position.x - half, position.y +    0,
-        position.x + 0   , position.y - half
+        position.x + 0, position.y - half,
+        position.x + half, position.y + 0,
+        position.x + 0, position.y + half,
+        position.x - half, position.y + 0,
+        position.x + 0, position.y - half
     ];
 
     // Drwas the "Circle" //
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(corners), gl.STATIC_DRAW);
-    
+
     gl.useProgram(program);
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
@@ -30,33 +30,30 @@ function DrawCircle(gl: WebGLRenderingContext, program: WebGLProgram, position: 
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 5);
 }
 
-// The render loop of the program //
-export async function RenderLoop()
-{
-    // Gets the canvas and rendering context //
-    const canvas = document.getElementById('FrontCanvas') as HTMLCanvasElement;
-    const gl = canvas.getContext("webgl");
+let gl: WebGLRenderingContext | null;
+let last: number | null = null;
 
-    if (!gl)
+// -- The render loop of the program -- //
+function RenderLoop()
+{
+    console.log('Started render loop');
+
+    // Checks rendering context is not null //
+    if (gl === null)
     {
-        throw new Error("WebGL not supported");
+        console.error("WebGL is not supported");
+        return;
     }
 
     // Makes the canvas highest possible resolution //
-    const css_width = canvas.clientWidth;
-    const css_height = canvas.clientHeight;
-    
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = css_width * dpr;
-    canvas.height = css_height * dpr;
-
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.canvas.width = 3440;
+    gl.canvas.height = 1440;
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     // Loads the shaders into a program //
-    const vertShader = await CreateShader(gl, gl.VERTEX_SHADER,   "shaders/vert.glsl");
-    const fragShader = await CreateShader(gl, gl.FRAGMENT_SHADER, "shaders/frag.glsl");
-    const program = await CreateProgram(gl, vertShader, fragShader);
+    const vertShader = CreateShader(gl, gl.VERTEX_SHADER, "shaders/vert.glsl");
+    const fragShader = CreateShader(gl, gl.FRAGMENT_SHADER, "shaders/frag.glsl");
+    const program = CreateProgram(gl, vertShader, fragShader);
 
     // Creates an array of dots //
     const dots: FrontCanvasRenderDot[] = Array.from
@@ -65,20 +62,22 @@ export async function RenderLoop()
         () => new FrontCanvasRenderDot()
     );
 
-    // The last time the loop was run //
-    let last: number | null = null;
-
     // The actual render loop //
-    function loop(currentTime: number)
+    function RenderFrame(current: number)
     {
         // Calculates the delta time //
         if (last === null)
         {
-            last = currentTime;
+            last = current
         }
 
-        const delta = (currentTime - last) / 1000;
-        last = currentTime;
+        const delta = (current - last) / 1000;
+        last = current;
+
+        if (delta > 0.008)
+        {
+            console.log(delta);
+        }
 
         // Clears the canvas //
         gl!.clearColor(0, 0, 0, 1);
@@ -102,7 +101,7 @@ export async function RenderLoop()
                 dot.velocity.y = -dot.velocity.y;
             }
         }
-        
+
         // Renders each of the dots //
         for (const dot of dots)
         {
@@ -110,9 +109,20 @@ export async function RenderLoop()
         }
 
         // Requests the next frame //
-        requestAnimationFrame(loop);
+        setTimeout(() => 
+        {
+            RenderFrame(performance.now());
+        }, 16); // ~60 fps
     }
 
     // Starts the loop //
-    requestAnimationFrame(loop); // The loop function requests a new annimation frame
+    RenderFrame(performance.now());
+}
+
+self.onmessage = (e) =>
+{
+    const offScreenCanvas: OffscreenCanvas = e.data.canvas;
+    gl = offScreenCanvas.getContext("webgl");
+
+    RenderLoop();
 }
