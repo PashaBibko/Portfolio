@@ -5,8 +5,6 @@
 
 #LhsSection
 {
-    background-image: url(images/chip.jpg);
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -17,8 +15,6 @@
 
 #RhsSection
 {
-    background-image: url(images/drg.webp);
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -111,8 +111,10 @@ export function RenderLoop() {
                 // Draws the circle on top //
                 DrawCircle(gl, program, dots[i].location);
             }
+            // Continues the render loop //
+            requestAnimationFrame(RenderFrame);
         }
         // Any faster causes the browser to lag //
-        setInterval(() => { RenderFrame(); }, 50);
+        requestAnimationFrame(RenderFrame);
     });
 }

@@ -11,7 +11,6 @@ function LoadCSS(url) {
 }
 // Loads the correct CSS //
 function LoadCorrectCSS() {
-    console.log("Reloaded CSS");
     // Loads the correct CSS depending on the user's device //
     if (IsUserOnMobile()) {
         LoadCSS("./Mobile.css");
